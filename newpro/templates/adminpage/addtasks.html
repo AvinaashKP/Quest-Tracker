@@ -1,0 +1,70 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+
+<style>
+    textarea{
+    border: 1px solid gray;
+    width:80%;
+    }
+    label{
+    font-weight:bold;
+    }
+    form b{
+    color:green;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a href="{% url 'USER_TASK' %}" class="breadcrumbs__link" > Tasks </a>
+  </li>
+    <li class="breadcrumbs__item">
+    <a  class="breadcrumbs__link"> Add Task </a>
+  </li>
+</ul>
+
+<div class="container">
+    <h3> ADD TASK </h3>
+    <br>
+    <form method="post" enctype = "multipart/form-data" class="form-control">
+         {% csrf_token %}
+
+        <div class="form-group"><label>Assigned To:</label>&nbsp;
+            <select name="assigned" required>
+                <option value="" selected>---------</option>
+                {% for i in users %}
+                <option value={{i.id}}> {{i.username}} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group"><label>Task Name:</label>&nbsp;
+            <input type="text" name="pname">
+        </div>
+
+        <div class="form-group"><label for="desc">Task Description:</label>&nbsp;
+            <br>
+        <textarea id="desc" name="desc"></textarea> </div>
+
+        <div class="form-group"><label>Start Date:</label>&nbsp;
+            <input type="date" name="sdate">
+        </div>
+
+        <div class="form-group"><label>Due Date:</label>&nbsp;
+            <input type="date" name="ddate">
+        </div>
+
+        <div class="form-group">
+
+            <button type="submit" class="btn btn-success" >Add Task </button>
+            &nbsp;
+            <a href="{% url 'USER_TASK' %}" class="btn btn-secondary" >Cancel </a>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

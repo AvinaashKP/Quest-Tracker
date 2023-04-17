@@ -1,0 +1,83 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+        .container{
+        margin-bottom:50px;
+        width:70%;
+        }
+        form{
+        background:white;
+        font-size:18px;
+        }
+
+        label{
+        font-weight:bold;
+        }
+        input{
+        border-radius:4px;
+        border:1px solid silver;
+        }
+        input[type="file"]{
+        font-size:15px;
+        }
+</style>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a href="{% url 'USER_LIST' %}" class="breadcrumbs__link"> Users </a>
+  </li>
+    <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Users Details </a>
+  </li>
+</ul>
+
+    {% include 'message.html' %}
+
+        {% csrf_token %}
+        {% if data %}
+
+<h3 align="center">USER PROFILE &nbsp;&nbsp; <a href="{% url 'USER_LIST' %}" class="btn btn-secondary">BACK</a>
+</h3>
+
+<br><br>
+<div class="container">
+    <form method="post" enctype = "multipart/form-data" class="form-control">
+        <div class="form-group" >
+                 {% if data.Picture %}
+
+                    <img src="{{data.Picture.url}}" style="height:150px; width:150px;">
+
+                 {% endif %}
+
+          </div>
+
+            <div class="form-group"><label>Name:</label>&nbsp;{{data.Last_name}}&nbsp;{{data.First_name}}</div>
+
+            <div class="form-group"><label>Email:</label>&nbsp;{{data.Email}}</div>
+
+            <div class="form-group"><label>Username:</label>&nbsp;{{data.Username}}</div>
+
+            <div class="form-group">
+                     <label>Gender:</label>&nbsp;{{data.Gender}}
+            </div>
+
+            <div class="form-group"><label>Address:</label>
+             &nbsp;{{data.Address}}
+            </div>
+
+
+            <div class="form-group"><label>Designation:</label>
+            &nbsp;{{data.Designation}}
+            </div>
+
+            <div class="form-group"><label>Number:</label>
+            &nbsp;{{data.Number}}
+            </div>
+
+      </form>
+     </div>
+        {% endif %}
+
+{% endblock %}

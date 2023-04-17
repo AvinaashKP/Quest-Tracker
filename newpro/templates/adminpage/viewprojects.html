@@ -1,0 +1,65 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+    tr {
+    background-color: #b0d1e4;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Projects </a>
+  </li>
+</ul>
+
+{% include 'message.html' %}
+
+<div class="container">
+    <h3 align ="left">PROJECT LIST</h3>
+<br>
+    <a href="{% url 'ADD_PROJECT' %}" class="btn btn-success">Add Project</a>
+<br><br>
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Project id</th>
+        <th scope="col">Assigned To</th>
+        <th scope="col">Project Title</th>
+        <th scope="col">Project Description</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Project File</th>
+        <th scope="col">Status</th>
+        <th scope="col" colspan="2">Action</th>
+    </tr>
+    </thead>
+
+            {% for i in project %}
+    <tbody>
+    <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.Assigned_to}}</td>
+        <td>{{i.ProName}}</td>
+        <td>{{i.Prodesc}}</td>
+        <td>{{i.startdate}}</td>
+        <td>{{i.duedate}}</td>
+        {% if i.Status == "Completed" %}
+            <td><a href="/media/{{i.file}}"> {{i.file}}</a></td>
+        {% else %}
+            <td>No file Submitted</td>
+        {% endif %}
+        <td>{{i.Status}}</td>
+        <td><a href = "{% url 'EDIT_PROJECT' i.id %}" class="btn btn-primary">Edit</a></td>
+        <td><a href = "{% url 'DELETE_PROJECT' i.id %}" class="btn btn-danger">Delete</a></td>
+    </tr>
+    </tbody>
+
+            {% endfor %}
+
+</table>
+</div>
+
+{% endblock %}

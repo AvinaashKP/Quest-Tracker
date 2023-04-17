@@ -1,0 +1,55 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+
+<style>
+       tr {
+    background-color: #b0d1e4;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link">Users</a>
+  </li>
+</ul>
+
+<div class="container">
+    <h3>USER LISTS</h3>
+    <br>
+    <form method="post" enctype = "multipart/form-data">
+        {% csrf_token %}
+
+
+        <table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">User id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Username</th>
+        <th scope="col">Designation</th>
+        <th scope="col">Email</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+         {% for i in users %}
+    <tbody>
+    <tr>
+        <th scope="row">{{i.id}}</th>
+        <td scope="row">{{i.Last_name}}&nbsp;{{i.First_name}}</td>
+        <td scope="row">{{i.Username}}</td>
+        <td scope="row">{{i.Designation}}</td>
+        <td scope="row">{{i.Email}}</td>
+        <td scope="row"><a href="{% url 'USER_DETAILS' i.id %}" class="btn btn-primary">View Details</a></td>
+    </tr>
+    </tbody>
+                {% endfor %}
+        </table>
+
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+    tr {
+    background-color: #b0d1e4;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a  class="breadcrumbs__link"> Tasks </a>
+  </li>
+</ul>
+
+{% include 'message.html' %}
+
+<div class="container">
+    <h3 align ="left">TASK LIST</h3>
+    <br>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Task Id</th>
+            <th scope="col">Task Name</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+
+                {% for i in task %}
+                {% if i.Assigned_to_id == request.user.id  %}
+        <tbody>
+            <tr>
+                <th scope="row">{{i.id}}</th>
+                <td>{{i.TaskName}}</td>
+                <td>{{i.startdate}}</td>
+                <td>{{i.duedate}}</td>
+                <td>{{i.Status}}</td>
+                <td><a href="{% url 'TASK_DETAILS' i.id %}" class="btn btn-success">View Details</a></td>
+            </tr>
+        </tbody>
+
+                {% endif %}
+                {% endfor %}
+
+</table>
+</div>
+{% endblock %}

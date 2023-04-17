@@ -1,0 +1,43 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+        .settings a{
+        font-size:20px;
+        padding:10px;
+        color:black;
+        }
+        h3{
+        font-size:30px;
+        }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Settings </a>
+  </li>
+</ul>
+<div class="container">
+
+    <h3>SETTINGS</h3>
+<br><br>
+
+<div class="settings">
+    {% for i in data %}
+    {% if i.user_id == request.user.id %}
+<br>
+
+ <a href="{% url 'EDIT_PROFILE' i.user_id %}"> <i class="fa-solid fa-user-pen"></i> Edit Profile </a>
+    <br> <br>
+  <a href="{% url 'RESET_PASSWORD'  %}" > <i class="fa-solid fa-key"></i> Reset Password </a>
+
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+</div>
+
+{% endblock %}

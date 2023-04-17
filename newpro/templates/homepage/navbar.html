@@ -1,0 +1,82 @@
+<style>
+
+        nav p{
+        color:#fff;
+        text-transform:uppercase;
+        text-align:center;
+        margin:25px 0 25px 0;
+        }
+        nav ul li{
+        padding:15px;
+        border-bottom:1px solid rgba(0,0,0,0.05);
+        border-top:1px solid rgba(225,225,225,0.05);
+        }
+        nav ul li a{
+        color:#bdb8d7;
+        display:block;
+        text-decoration:none;
+        }
+        nav ul li:hover{
+        background:#594f8d;
+        text-decoration:none;
+        }
+        nav ul li:hover a{
+        color:#fff;
+        }
+</style>
+<nav>
+                {% csrf_token %}
+
+    <p>
+        {% for i in pic %}
+        <img src="{{i.Picture.url}}" style="height:100px; width:100px; border-radius:50%">
+        {% endfor %}
+    </p>
+
+    {% if request.user.is_staff or request.user.is_superuser %}
+       <ul>
+            <li> <a href="{% url 'DASHBOARD' %}"> <i class="fa-solid fa-gauge"></i>  Dashboard</a></li>
+            <li><a href="{% url 'VIEW_PROFILE' %}"> <i class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="{% url 'USER_LIST' %}"> <i class="fa-solid fa-users"></i> Users </a></li>
+            <li><a href="{% url 'USER_PROJECT' %}"> <i class="fa-solid fa-file-lines"></i> Projects </a></li>
+            <li><a href="{% url 'USER_TASK' %}"> <i class="fa-solid fa-list-check"></i> Tasks </a></li>
+            <li><a href="{% url 'NOTIFICATION' %}"> <i class="fa-solid fa-envelope"></i> Inbox
+
+                {% if msg_count > 0 %}
+                <span class="badge badge-danger"> {{msg_count}} </span>
+                {% endif %}
+
+            </a></li>
+            <li><a href="{% url 'SETTINGS' %}"><i class="fa-solid fa-gear"></i> Settings</a></li>
+       </ul>
+
+    {% elif request.user.is_active %}
+        <ul>
+            <li> <a href="{% url 'DASHBOARD' %}"> <i class="fa-solid fa-gauge"></i>  Dashboard</a></li>
+            <li><a href="{% url 'VIEW_PROFILE' %}"> <i class="fa-solid fa-user"></i> Profile</a></li>
+            <li><a href="{% url 'MYPROJECT' %}"> <i class="fa-solid fa-file-lines"></i> Projects
+
+                {% if pro_count > 0 %}
+                <span class="badge badge-danger"> {{pro_count}} </span>
+                {% endif %}
+
+            </a></li>
+            <li><a href="{% url 'MYTASK' %}"> <i class="fa-solid fa-list-check"></i>  Tasks
+
+                {% if task_count > 0 %}
+                <span class="badge badge-danger"> {{task_count}} </span>
+                {% endif %}
+
+            </a></li>
+
+            <li><a href="{% url 'NOTIFICATION' %}"> <i class="fa-solid fa-envelope"></i> Inbox
+
+                {% if msg_count > 0 %}
+                <span class="badge badge-danger"> {{msg_count}} </span>
+                {% endif %}
+
+            </a></li>
+            <li><a href="{% url 'SETTINGS' %}"><i class="fa-solid fa-gear"></i> Settings</a></li>
+        </ul>
+    {% endif %}
+</nav>

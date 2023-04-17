@@ -1,0 +1,77 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+
+<style>
+    textarea{
+    border: 1px solid gray;
+    width:80%;
+    }
+    label{
+    font-weight:bold;
+    }
+    form b{
+    color:green;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a href="{% url 'MYPROJECT' %}" class="breadcrumbs__link" > Projects </a>
+  </li>
+    <li class="breadcrumbs__item">
+    <a  class="breadcrumbs__link"> Project Details </a>
+  </li>
+</ul>
+
+<div class="container">
+    <h3> Project Details </h3>
+    <br>
+    <form method="post" enctype = "multipart/form-data" class="form-control">
+        {% csrf_token %}
+        {% if data %}
+
+        <div class="form-group"><label>Project Name:</label>&nbsp;{{data.ProName}}</div>
+
+        <div class="form-group"><label for="desc">Project Description:</label>&nbsp;
+            <br>
+        <textarea id="desc" disabled>{{data.Prodesc}}</textarea> </div>
+
+        <div class="form-group"><label>Start Date:</label>&nbsp;{{data.startdate}}</div>
+
+        <div class="form-group"><label>Due Date:</label>&nbsp;{{data.duedate}}</div>
+
+        <div class="form-group"><label>Upload Your Project File here:</label>
+
+              {% if data.Status == "Progress" %}
+            <div class="custom-file">
+                <input type="file" name="project_file"  class="custom-file-input" id="validatedCustomFile" value="{{data.file}}" required>
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            </div>
+            {% elif data.Status == "Completed" %}
+            <div class="custom-file">
+                <input type="file" name="project_file"  class="custom-file-input"  value="{{data.file}}" disabled>
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              <br>Current File: <a href="/media/{{data.file}}"> {{data.file}}</a>
+            </div> <b> Project Submitted <i class="fa-regular fa-square-check"></i></b>
+            {% endif %}
+        </div>
+
+        <div class="form-group"><label>Project Status:</label>&nbsp;{{data.Status}}</div>
+
+        <div class="form-group">
+            {% if data.Status == "Progress" %}
+            <button type="submit" class="btn btn-success" >Submit Project </button>
+            {% elif data.Status == "Completed" %}
+            <button type="submit" class="btn btn-success" disabled>Submit Project </button>
+            {% endif %}
+
+            &nbsp;<a href="{% url 'MYPROJECT' %}" class="btn btn-secondary" >Back to Project List </a> </div>
+    {% endif %}
+    </form>
+</div>
+
+
+{% endblock %}

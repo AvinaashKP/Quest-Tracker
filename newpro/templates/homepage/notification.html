@@ -1,0 +1,58 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+
+<style>
+    .container a{
+    text-decoration:none;
+    color:black;
+    }
+    .new_message td{
+    font-weight:500;
+    }
+</style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a  class="breadcrumbs__link"> Inbox </a>
+  </li>
+</ul>
+
+<div class="container">
+    <h3 align ="left">INBOX</h3>
+    <br>
+
+            {% for i in inbox reversed %}
+            {% if i.To_id == request.user.id %}
+
+    <a href="{% url 'READ_MESSAGE' i.id %}" >
+    <table class="table table-hover table-secondary">
+
+    <tbody>
+        <tr>
+            {% if i.Read == True %}
+            <td scope="col">From: {{i.From}}</td>
+            <td scope="col">{{i.Subject}}</td>
+            <td scope="col">{{i.Date}}</td>
+            <td scope="col">Read</td>
+        </tr>
+            {% elif i.Read == False %}
+
+        <tr class="new_message">
+            <td scope="col">From: {{i.From}}</td>
+            <td scope="col">{{i.Subject}}</td>
+            <td scope="col">{{i.Date}}</td>
+            <td scope="col">Unread</td>
+            {% endif %}
+        </tr>
+    </tbody>
+
+    </table>
+    </a>
+            {% endif %}
+            {% endfor %}
+
+</div>
+{% endblock %}

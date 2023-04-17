@@ -1,0 +1,100 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+        .container{
+        margin-bottom:50px;
+        width:70%;
+        }
+        form{
+        background:white;
+        font-size:18px;
+        }
+        label{
+        font-weight:bold;
+        }
+        .row{
+        margin-bottom:20px;
+        }
+        input[type="file"]{
+        font-size:15px;
+        }
+</style>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Profile </a>
+  </li>
+</ul>
+
+    {% include 'message.html' %}
+
+        {% csrf_token %}
+      {% for data in data %}
+    {% if data.user_id == request.user.id %}
+
+<h3 align ="center">MY PROFILE &nbsp;&nbsp;
+ <a href="{% url 'EDIT_PROFILE' data.id %}"  class="btn btn-secondary"> <i class="fa-solid fa-user-pen"></i> Edit Profile</a>
+</h3>
+
+<br><br>
+<div class="container">
+    <div class="form-control">
+    <form method="post" enctype = "multipart/form-data" class="was-validated">
+        <div class="form-group" >
+                 {% if data.Picture %}
+
+                    <img src="{{data.Picture.url}}" style="height:150px; width:150px; border-radius:50%">
+
+                 {% endif %}
+
+        </div>
+
+                    <div class="row">
+
+                <div class="col"><label>Name:</label>
+                    <div class="form-control">{{data.Last_name}}&nbsp;{{data.First_name}}</div>
+                </div>
+
+                <div class="col"><label>Email:</label>
+                    <div class="form-control">{{data.Email}}</div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col"><label>Username:</label>
+                    <div class="form-control">{{data.Username}}</div>
+                </div>
+
+                <div class="col"><label>Group:</label>
+                    <div class="form-control">{{user.groups.all.0}}</div>
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col"><label>Gender:</label>
+                <div class="form-control">{{data.Gender}}</div>
+            </div>
+            <div class="col"><label>Address:</label>
+                <div class="form-control">{{data.Address}}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col"><label>Designation:</label>
+                <div class="form-control">{{data.Designation}}</div>
+            </div>
+            <div class="col"><label>Phone Number:</label>
+                <div class="form-control">{{data.Number}}</div>
+            </div>
+        </div>
+
+    </form>
+    </div>
+</div>
+        {% endif %}
+        {% endfor %}
+
+{% endblock %}

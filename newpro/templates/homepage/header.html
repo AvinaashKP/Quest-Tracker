@@ -1,0 +1,41 @@
+<style>
+        .header{
+        height:80px;
+        width:100%;
+        background:#0082ef;
+        }
+        .logo{
+        color:white;
+        font-size:25px;
+        line-height:80px;
+        padding-left:50px;
+        font-weight:bold;
+        }
+        .header button{
+        padding-top:25px;
+        background:#0082ef;
+        color:white;
+        float:right;
+        }
+        button b{
+        font-size:20px;
+        }
+</style>
+<div class = "header">
+     <label class="logo">Website Name</label>
+
+         <button class="btn btn-lg dropdown-toggle" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <b>Welcome {{request.user}}</b>
+
+         </button>
+
+        <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item"  href="{% url 'VIEW_PROFILE' %}"> <i class="fa-solid fa-user"></i> Profile</a>
+            <a class="dropdown-item" href="{% url 'SETTINGS' %}"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a class="dropdown-item" href="{% url 'LOGOUT' %}"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+
+
+</div>

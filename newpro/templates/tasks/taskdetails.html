@@ -1,0 +1,77 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+    textarea{
+    border: 1px solid gray;
+    width:80%;
+    }
+    label{
+    font-weight:bold;
+    }
+    form b{
+    color:green;
+    }
+</style>
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a href="{% url 'MYTASK' %}" class="breadcrumbs__link" > Tasks </a>
+  </li>
+    <li class="breadcrumbs__item">
+    <a  class="breadcrumbs__link"> Task Details </a>
+  </li>
+</ul>
+
+<div class="container">
+    <h3> Task Details </h3>
+    <br>
+    <form method="post" enctype = "multipart/form-data" class="form-control">
+
+        {% csrf_token %}
+
+        {% if data %}
+
+        <div class="form-group"><label>Task Name:</label>&nbsp;{{data.TaskName}}</div>
+
+        <div class="form-group"><label for="desc">Task Description:</label>&nbsp;
+        <br>
+            <textarea id ="desc" disabled>{{data.Taskdesc}} </textarea>  </div>
+
+        <div class="form-group"><label>Start Date:</label>&nbsp;{{data.startdate}}</div>
+
+        <div class="form-group"><label>Due Date:</label>&nbsp;{{data.duedate}}</div>
+
+        <div class="form-group"><label>Upload Your Project File here:</label>
+
+              {% if data.Status == "Progress" %}
+            <div class="custom-file">
+                <input type="file" name="task_file"  class="custom-file-input" id="validatedCustomFile" value="{{data.file}}" required>
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            </div>
+            {% elif data.Status == "Completed" %}
+            <div class="custom-file">
+                <input type="file" name="task_file"  class="custom-file-input"  value="{{data.file}}" disabled>
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                <br> Current File: <a href="/media/{{data.file}}"> {{data.file}}</a>
+            </div> <b> Task Submitted <i class="fa-regular fa-square-check"></i></b>
+            {% endif %}
+        </div>
+
+        <div class="form-group"><label>Task Status:</label>&nbsp;{{data.Status}}</div>
+
+        <div class="form-group">
+            {% if data.Status == "Progress" %}
+            <button type="submit" class="btn btn-success" >Submit Task </button>
+            {% elif data.Status == "Completed" %}
+            <button type="submit" class="btn btn-success" disabled>Submit Task </button>
+            {% endif %}
+
+            &nbsp;<a href="{% url 'MYTASK' %}" class="btn btn-secondary" >Back to Task List </a>
+        </div>
+        {% endif %}
+    </form>
+</div>
+     <script src = "script.js"></script>
+{% endblock %}

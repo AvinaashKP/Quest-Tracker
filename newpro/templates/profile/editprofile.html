@@ -1,0 +1,140 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+    <style>
+        .container{
+        margin-bottom:50px;
+        width:70%;
+        }
+        form{
+        background:white;
+        font-size:18px;
+        }
+        .row{
+        margin-bottom:20px;
+        }
+        label{
+        font-weight:bold;
+        }
+    </style>
+
+<ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+    <a href="{% url 'DASHBOARD' %}" class="breadcrumbs__link"> Dashboard </a>
+    </li>
+    <li class="breadcrumbs__item">
+    <a href="{% url 'SETTINGS' %}" class="breadcrumbs__link"> Settings</a>
+  </li>
+        <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Edit Profile </a>
+  </li>
+</ul>
+
+    <h3 align="center">EDIT PROFILE &nbsp;&nbsp;
+        <a href="{% url 'VIEW_PROFILE' %}" class="btn btn-secondary"> <i class="fa-solid fa-user"></i> View Profile</a>
+    </h3>
+
+<br><br>
+<div class="container">
+    <div class="form-control">
+        <form method="post" enctype = "multipart/form-data">
+        {% csrf_token %}
+            {% if data %}
+
+             <div class="row">
+                 <div class="col">
+                     {% if data.Picture %}
+                    <img src="{{data.Picture.url}}"
+                     style="height:150px; width:150px; border-radius:50%">
+                 {% endif %}
+                 </div>
+
+             </div>
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text">Upload Picture</span>
+                        </div>
+                        <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                    name = "picture" value="{{data.Picture}}">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col"><label>Name:</label>
+                    <div class="form-control">{{data.Last_name}}&nbsp;{{data.First_name}}</div>
+                </div>
+
+                <div class="col"><label>Email:</label>
+                    <div class="form-control">{{data.Email}}</div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col"><label>Username:</label>
+                    <div class="form-control">{{data.Username}}</div>
+                </div>
+
+                <div class="col"><label>Group:</label>
+                    <div class="form-control">{{user.groups.all.0}}</div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+                <label >Gender:</label>
+                <select class="custom-select" name="gender" required>
+                    {% if data.Gender == "Male" %}
+                        <option value="" selected>Select your Gender</option>
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                    {% elif data.Gender == "Female" %}
+                        <option value="" selected>Select your Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female" selected>Female</option>
+                    {% else %}
+                        <option value="" selected>Select your Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    {% endif %}
+                </select>
+                </div>
+
+                <div class="col">
+                    <label>Address:</label>
+                <input type = "text" class="form-control" name = "address" value={{data.Address}} required></div>
+                </div>
+            <div class="row">
+
+                <div class="col"><label>Designation:</label>
+
+                <input type = "text" class="form-control" name = "designation" value ={{data.Designation}} required>
+                </div>
+
+                <div class="col"><label>Phone Number:</label>
+
+                <input type = "tel" class="form-control" name = "number" value={{data.Number}} required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                <button class="btn btn-success" type="submit" >Update Profile</button>
+                </div>
+            </div>
+                    {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

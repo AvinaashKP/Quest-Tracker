@@ -1,0 +1,87 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<style>
+        h3{
+        font-size:30px;
+        }
+</style>
+
+<!--BREADCRUMBS-->
+
+        <ul class="breadcrumbs ">
+  <li class="breadcrumbs__item">
+    <a class="breadcrumbs__link"> Dashboard </a>
+  </li>
+</ul>
+
+{% include 'message.html' %}
+
+<!--DASHBOARD-->
+{% csrf_token %}
+
+<div class="container">
+
+
+    <h3 align ="left">DASHBOARD</h3>
+
+         <br><br>
+
+{% if request.user.is_staff or request.user.is_superuser %}
+
+             <div class="col-sm-6">
+    <div class="card text-white bg-info mb-3 w-60" >
+  <div class="card-body ">
+    <h5 class="card-title"><b>Total Users</b></h5>
+        <h2 class="card-text"> {{user_count}}</h2>
+  </div>
+  </div>
+     </div>
+
+
+               <div class="col-sm-6">
+    <div class="card text-white bg-info mb-3 w-60" >
+  <div class="card-body ">
+    <h5 class="card-title"><b>Senior Staff </b></h5>
+        <h2 class="card-text"> {{senior_count}}</h2>
+  </div>
+  </div>
+     </div>
+
+
+               <div class="col-sm-6">
+    <div class="card text-white bg-info mb-3 w-60" >
+  <div class="card-body ">
+    <h5 class="card-title"><b>Junior Staff </b></h5>
+        <h2 class="card-text"> {{junior_count}}</h2>
+  </div>
+  </div>
+     </div>
+
+
+        {% elif request.user.is_active %}
+
+       <div class="col-sm-6">
+    <div class="card text-white bg-info mb-3 w-20" >
+  <div class="card-body ">
+    <h5 class="card-title"><b>Projects</b></h5>
+        <p class="card-text">Completed: {{PC}} </p>
+        <p class="card-text">Progress: {{PP}}</p>
+        <a href="{% url 'MYPROJECT' %}" class="btn btn-light text-info"> View Projects</a>
+  </div>
+  </div>
+     </div>
+
+     <div class="col-sm-6">
+    <div class="card text-white bg-info mb-3 w-60" >
+  <div class="card-body ">
+    <h5 class="card-title"><b>Tasks</b></h5>
+        <p class="card-text">Completed: {{TC}} </p>
+        <p class="card-text">Progress: {{TP}}  </p>
+        <a href="{% url 'MYTASK' %}" class="btn btn-light text-info"> View Tasks </a>
+  </div>
+  </div>
+     </div>
+{% endif %}
+</div>
+
+{% endblock %}
