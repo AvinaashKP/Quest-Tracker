@@ -29,9 +29,9 @@
     {% if i.user_id == request.user.id %}
 <br>
 
- <a href="{% url 'EDIT_PROFILE' i.user_id %}"> <i class="fa-solid fa-user-pen"></i> Edit Profile </a>
+ <a href="{% url 'EDIT_PROFILE' i.id %}"> <i class="fa-solid fa-user-pen"></i> Edit Profile </a>
     <br> <br>
-  <a href="{% url 'RESET_PASSWORD'  %}" > <i class="fa-solid fa-key"></i> Reset Password </a>
+  <a href="{% url 'RESET_PASSWORD' %}" > <i class="fa-solid fa-key"></i> Reset Password </a>
 
     {% endif %}
     {% endfor %}

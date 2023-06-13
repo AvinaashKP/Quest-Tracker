@@ -84,13 +84,11 @@ WSGI_APPLICATION = 'newpro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'student',
-        'USER': 'root',
-        'PASSWORD': '',
-        'OPTIONS': {
-        'sql_mode':'traditional',
-        }
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'PORT': '5432',
     }
 }
 
